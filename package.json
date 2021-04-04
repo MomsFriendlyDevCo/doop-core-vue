@@ -2,7 +2,7 @@
   "name": "@doop/frontend-vue",
   "version": "0.0.0",
   "description": "Doop compiler for frontend Vue projects",
-  "main": "./lib/compiler.js",
+  "main": "./lib/index.js",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/MomsFriendlyDevCo/doop-frontend-vue.git"
