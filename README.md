@@ -18,9 +18,10 @@ This function expects the Doop global `app` to be available and it will use it f
 
 Options:
 
-| Name          | Type       | Default          | Description                                            |
-|---------------|------------|------------------|--------------------------------------------------------|
-| `config`      | `Object`   | Internal config* | The Webpack config to use, see notes                   |
-| `configMerge` | `Object`   | `{}`             | Additional config to merge into base using `_.merge()` |
-| `log`         | `function` | `console.log`    | Logging function for any output                        |
-| `colors`      | `boolean`  | `true`           | Whether to display coloring in output                  |
+| Name            | Type       | Default          | Description                                                                      |
+|-----------------|------------|------------------|----------------------------------------------------------------------------------|
+| `config`        | `Object`   | Internal config* | The Webpack config to use, see notes                                             |
+| `configMerge`   | `Object`   | `{}`             | Additional config to merge into base using `_.merge()`                           |
+| `log`           | `function` | `console.log`    | Logging function for any output                                                  |
+| `colors`        | `boolean`  | `true`           | Whether to display coloring in output                                            |
+| `cacheCompiler` | `boolean`  | `false`          | Cache and reuse a webpack compiler if its available, memory expensive but faster |
