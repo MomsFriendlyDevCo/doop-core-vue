@@ -5,6 +5,22 @@ Doop compiler for frontend Vue projects.
 This module generally lives inside a build script.
 
 
+```javascript
+/**
+* Process all .vue file <script frontend/>, <template/> and <style/> blocks
+*/
+let gulp = require('gulp');
+let {compiler} = require('@doop/frontend-vue');
+
+gulp.task('build.vue', ['load:app', 'load:app.git'], ()=>
+	compiler({
+		cacheCompiler: app.config.isProduction, // Reuse cached compiler in dev mode
+		log: gulp.log, // Fancy logging output
+	})
+);
+```
+
+
 API
 ===
 This module exports only one sub-module currently, the `compiler` function.
