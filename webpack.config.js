@@ -22,7 +22,7 @@ module.exports = {
 	},
 	cache: {
 		type: 'filesystem',
-		cacheDirectory: fspath.resolve(__dirname, '.cache'),
+		cacheDirectory: `${app.config.paths.root}/.cache`,
 	},
 	module: {
 		rules: [
