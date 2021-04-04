@@ -8,11 +8,23 @@ var LodashPlugin = require('lodash-webpack-plugin');
 var webpack = require('webpack');
 var fspath = require('path');
 
+//if (!global.app) throw new Error('Cant find `app` global - run this compiler within a Doop project only');
+if (!global.app) {
+	global.app = {
+		config: {
+			isProduction: false,
+			paths: {
+				root: process.cwd(),
+			},
+		},
+	};
+}
+
 module.exports = {
 	mode: app.config.isProduction ? 'production' : 'development',
 	entry: {
-		setup: './frontend.doop.setup.js',
-		main: './frontend.doop.vue.js',
+		setup: `${app.config.paths.root}/frontend.doop.setup.js`,
+		main: `${app.config.paths.root}/frontend.doop.vue.js`,
 	},
 	output: {
 		globalObject: 'this',
@@ -29,7 +41,7 @@ module.exports = {
 			// FIXME: Loader does not export
 			{
 				test: require.resolve('./node_modules/@momsfriendlydevco/loader/dist/loader.js'),
-				loader: 'exports-loader',
+				loader: require.resolve('exports-loader'),
 				options: {
 					exports: 'default Loader',
 				},
@@ -37,28 +49,27 @@ module.exports = {
 			{
 				test: /\.js$/,
 				exclude: /node_modules/,
-				loader: 'babel-loader',
+				loader: require.resolve('babel-loader'),
 			},
 			{
 				test: /\.vue$/,
 				use: [
-					'vue-loader',
-					'./build/vue-loader-noexport.js',
+					require.resolve('vue-loader'),
 				]
 			},
 			{
 				test: /\.(sa|sc|c)ss$/,
 				use: [
-					'vue-style-loader',
-					'css-loader',
-					'sass-loader',
+					require.resolve('vue-style-loader'),
+					require.resolve('css-loader'),
+					require.resolve('sass-loader'),
 				]
 			},
 			{
 				test: /\.(woff(2)?|ttf|eot|svg)(\?v=\d+\.\d+\.\d+)?$/,
 				use: [
 					{
-						loader: 'file-loader',
+						loader: require.resolve('file-loader'),
 						options: {
 							name: '[name].[ext]',
 							outputPath: 'fonts/'
