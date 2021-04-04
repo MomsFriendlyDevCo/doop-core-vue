@@ -1,11 +1,11 @@
 {
-  "name": "@doop/frontend-vue",
+  "name": "@doop/core-vue",
   "version": "0.0.0",
-  "description": "Doop compiler for frontend Vue projects",
+  "description": "Doop core module for frontend Vue projects",
   "main": "./lib/index.js",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/MomsFriendlyDevCo/doop-frontend-vue.git"
+    "url": "git+https://github.com/MomsFriendlyDevCo/doop-core-vue.git"
   },
   "keywords": [
     "Doop",
@@ -14,9 +14,9 @@
   "author": "Matt Carter <m@ttcarter.com>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/MomsFriendlyDevCo/doop-frontend-vue/issues"
+    "url": "https://github.com/MomsFriendlyDevCo/doop-core-vue/issues"
   },
-  "homepage": "https://github.com/MomsFriendlyDevCo/doop-frontend-vue#readme",
+  "homepage": "https://github.com/MomsFriendlyDevCo/doop-core-vue#readme",
   "dependencies": {
     "@momsfriendlydevco/loader": "^1.2.1",
     "babel-loader": "^8.2.2",

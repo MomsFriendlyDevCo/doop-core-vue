@@ -8,17 +8,7 @@ var LodashPlugin = require('lodash-webpack-plugin');
 var webpack = require('webpack');
 var fspath = require('path');
 
-//if (!global.app) throw new Error('Cant find `app` global - run this compiler within a Doop project only');
-if (!global.app) {
-	global.app = {
-		config: {
-			isProduction: false,
-			paths: {
-				root: process.cwd(),
-			},
-		},
-	};
-}
+if (!global.app) throw new Error('Cant find `app` global - run this compiler within a Doop project only');
 
 module.exports = {
 	mode: app.config.isProduction ? 'production' : 'development',
