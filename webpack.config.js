@@ -30,7 +30,7 @@ module.exports = {
 		rules: [
 			// FIXME: Loader does not export
 			{
-				test: require.resolve('./node_modules/@momsfriendlydevco/loader/dist/loader.js'),
+				test: require.resolve('@momsfriendlydevco/loader/dist/loader.js'),
 				loader: require.resolve('exports-loader'),
 				options: {
 					exports: 'default Loader',
