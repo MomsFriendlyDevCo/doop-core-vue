@@ -45,7 +45,7 @@ module.exports = {
 				test: /\.vue$/,
 				use: [
 					require.resolve('vue-loader'),
-					require.resolve('./fixes/vue-noexport'),
+					require.resolve('./fixes/doop-loader'),
 				]
 			},
 			{
