@@ -13,7 +13,6 @@ if (!global.app) throw new Error('Cant find `app` global - run this compiler wit
 module.exports = {
 	mode: app.config.isProduction ? 'production' : 'development',
 	entry: {
-		setup: `${app.config.paths.root}/frontend.doop.setup.js`,
 		main: `${app.config.paths.root}/frontend.doop.vue.js`,
 	},
 	output: {
@@ -28,14 +27,6 @@ module.exports = {
 	},
 	module: {
 		rules: [
-			// FIXME: Loader does not export
-			{
-				test: require.resolve('@momsfriendlydevco/loader/dist/loader.js'),
-				loader: require.resolve('exports-loader'),
-				options: {
-					exports: 'default Loader',
-				},
-			},
 			{
 				test: /\.js$/,
 				exclude: /node_modules/,
