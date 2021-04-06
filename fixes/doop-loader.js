@@ -9,9 +9,9 @@ module.exports = function (source) {
 
 	// Export a default when importing modules
 	if (
-		/^<script/.test(source) &&
-		/^import/m.test(source) &&
-		!/^export/m.test(source)
+		/^\s*<script/m.test(source) &&
+		/^\s*import/m.test(source) &&
+		!/^\s*export/m.test(source)
 	) return source.replace(/^(\s*)(<\/script>)/m, '$1export default {}$2');
 
 	return source;
