@@ -59,6 +59,18 @@ module.exports = {
 				]
 			},
 			{
+				test: /\.jpe?g$|\.gif$|\.png$/i,
+				use: [
+					{
+						loader: require.resolve('file-loader'),
+						options: {
+							name: '[name].[ext]',
+							outputPath: 'images/'
+						}
+					}
+				]
+            },
+			{
 				test: /\.(woff(2)?|ttf|eot|svg)(\?v=\d+\.\d+\.\d+)?$/,
 				use: [
 					{
