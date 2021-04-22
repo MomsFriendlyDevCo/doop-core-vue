@@ -23,7 +23,7 @@ gulp.task('build.vue', ['load:app', 'load:app.git'], ()=>
 
 API
 ===
-This module exports only one sub-module currently, the `compiler` function.
+This module exports the following sub-modules:
 
 
 Compiler(options)
@@ -48,3 +48,8 @@ Options:
 * The default Webpack config is [avaiable here](https://github.com/MomsFriendlyDevCo/doop-core-vue/blob/master/webpack.config.js)
 * When `cacheCompiler` is enabled the Webpack compiler is loaded once and held in memory, it gets reused on all subsequent hits
 * When `cacheCompiler` is enabled and the compiler is busy it is waited on before continuing so it can finish caching local data, a status message is displayed when this occurs
+
+
+expressMiddleware
+-----------------
+Included automatically when a Doop backend server loads to inject the Webpack HMR handlers.

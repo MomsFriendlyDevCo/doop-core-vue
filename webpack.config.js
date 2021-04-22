@@ -12,9 +12,10 @@ if (!global.app) throw new Error('Cant find `app` global - run this compiler wit
 
 module.exports = {
 	mode: app.config.isProduction ? 'production' : 'development',
-	entry: {
-		main: `${app.config.paths.root}/frontend.doop.vue.js`,
-	},
+	entry: [
+		`${app.config.paths.root}/frontend.doop.vue.js`,
+		...(app.config.isProduction ? [] : ['webpack-hot-middleware/client?path=/dist/hmr']),
+	],
 	output: {
 		globalObject: 'this',
 		libraryTarget: 'umd',
@@ -92,7 +93,6 @@ module.exports = {
 		],
 	},
 	plugins: [
-		// TODO: popper.js
 		new webpack.DefinePlugin({
 			CONFIG: JSON.stringify(app.config),
 		}),
@@ -109,15 +109,7 @@ module.exports = {
 			],
 		}),
 		new LodashPlugin(),
-
-		/* FIXME: Does this help in any way?
-		new webpack.DllPlugin({
-			path: fspath.join(__dirname, 'dist', '[name]-manifest.json'),
-			name: '[name]_[fullhash]',
-		})
-		*/
-
-
+		...(app.config.isProduction ? [] : [new webpack.HotModuleReplacementPlugin()]),
 		new webpack.AutomaticPrefetchPlugin(),
 		new webpack.ProgressPlugin({
 			activeModules: true,
