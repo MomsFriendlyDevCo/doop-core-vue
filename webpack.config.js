@@ -45,9 +45,32 @@ module.exports = {
 				use: [
 					require.resolve('vue-style-loader'),
 					require.resolve('css-loader'),
-					require.resolve('sass-loader'),
+					{
+						loader: require.resolve('sass-loader'),
+						options: {
+						  sassOptions: {
+							indentWidth: 4,
+							includePaths: [
+								fspath.resolve(__dirname, './node_modules'),
+								fspath.resolve('./node_modules'),
+							],
+						  },
+						},
+					},
 				]
 			},
+			{
+				test: /\.jpe?g$|\.gif$|\.png$/i,
+				use: [
+					{
+						loader: require.resolve('file-loader'),
+						options: {
+							name: '[name].[ext]',
+							outputPath: 'images/'
+						}
+					}
+				]
+            },
 			{
 				test: /\.(woff(2)?|ttf|eot|svg)(\?v=\d+\.\d+\.\d+)?$/,
 				use: [
