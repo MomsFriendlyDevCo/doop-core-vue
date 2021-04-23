@@ -22,8 +22,8 @@ module.exports = {
 			gitignore: true, // Respect .gitignore file (usually excludes node_modules, data, test etc.)
 		})),
 
-		// Include webpack middlewhere when in production to hot reload components
-		...(app.config.isProduction ? [] : ['webpack-hot-middleware/client?path=/dist/hmr']),
+		// Include Webpack middlewhere when not in production to hot reload components
+		...(!app.config.isProduction && app.config.hmr.enabled && app.config.hmr.frontend ? ['webpack-hot-middleware/client?path=/dist/hmr'] : []),
 	],
 	output: {
 		globalObject: 'this',
@@ -141,7 +141,7 @@ module.exports = {
 			],
 		}),
 		new LodashPlugin(),
-		...(app.config.isProduction ? [] : [new webpack.HotModuleReplacementPlugin()]),
+		...(!app.config.isProduction && app.config.hmr.enabled && app.config.hmr.frontend ? [new webpack.HotModuleReplacementPlugin()] : []),
 		new webpack.AutomaticPrefetchPlugin(),
 		new webpack.ProgressPlugin({
 			activeModules: true,
