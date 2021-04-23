@@ -5,15 +5,24 @@
 var { VueLoaderPlugin } = require('vue-loader');
 var { CleanWebpackPlugin } = require('clean-webpack-plugin');
 var LodashPlugin = require('lodash-webpack-plugin');
-var webpack = require('webpack');
+var glob = require('globby');
 var fspath = require('path');
+var webpack = require('webpack');
 
 if (!global.app) throw new Error('Cant find `app` global - run this compiler within a Doop project only');
 
 module.exports = {
 	mode: app.config.isProduction ? 'production' : 'development',
 	entry: [
-		`${app.config.paths.root}/frontend.doop.vue.js`,
+		// Include all .vue files
+		...(glob.sync([
+			`${app.config.paths.root}/app/app.frontend.vue`, // Main app frontend loader (must be first)
+			`${app.config.paths.root}/**/*.vue`, // All application .vue files
+		], {
+			gitignore: true, // Respect .gitignore file (usually excludes node_modules, data, test etc.)
+		})),
+
+		// Include webpack middlewhere when in production to hot reload components
 		...(app.config.isProduction ? [] : ['webpack-hot-middleware/client?path=/dist/hmr']),
 	],
 	output: {
