@@ -10,6 +10,7 @@ var fspath = require('path');
 var webpack = require('webpack');
 
 if (!global.app) throw new Error('Cant find `app` global - run this compiler within a Doop project only');
+if (!Object.prototype.hasOwnProperty.call(global.app.config, 'hmr')) console.warn('[WARN] Missing HMR configuration');
 
 module.exports = {
 	mode: app.config.isProduction ? 'production' : 'development',
@@ -23,7 +24,7 @@ module.exports = {
 		})),
 
 		// Include Webpack middlewhere when not in production to hot reload components
-		...(!app.config.isProduction && app.config.hmr.enabled && app.config.hmr.frontend ? ['webpack-hot-middleware/client?path=/dist/hmr'] : []),
+		...(!app.config.isProduction && app.config?.hmr?.enabled && app.config?.hmr?.frontend ? ['webpack-hot-middleware/client?path=/dist/hmr'] : []),
 	],
 	output: {
 		globalObject: 'this',
@@ -141,7 +142,7 @@ module.exports = {
 			],
 		}),
 		new LodashPlugin(),
-		...(!app.config.isProduction && app.config.hmr.enabled && app.config.hmr.frontend ? [new webpack.HotModuleReplacementPlugin()] : []),
+		...(!app.config.isProduction && app.config?.hmr?.enabled && app.config?.hmr?.frontend ? [new webpack.HotModuleReplacementPlugin()] : []),
 		new webpack.AutomaticPrefetchPlugin(),
 		new webpack.ProgressPlugin({
 			activeModules: true,
