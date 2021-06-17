@@ -145,11 +145,11 @@ module.exports = {
 		...(!app.config.isProduction && app.config?.hmr?.enabled && app.config?.hmr?.frontend ? [new webpack.HotModuleReplacementPlugin()] : []),
 		new webpack.AutomaticPrefetchPlugin(),
 		new webpack.ProgressPlugin({
-			activeModules: true,
+			activeModules: false,
 			entries: true,
 			modules: true,
 			profile: false,
-			dependencies: true,
+			dependencies: false,
 		}),
 	],
 	resolve: {
