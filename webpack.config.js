@@ -16,12 +16,20 @@ module.exports = {
 	mode: app.config.isProduction ? 'production' : 'development',
 	entry: [
 		// Include all .vue files
-		...(glob.sync([
-			`${app.config.paths.root}/app/app.frontend.vue`, // Main app frontend loader (must be first)
-			`${app.config.paths.root}/**/*.vue`, // All application .vue files
-		], {
-			gitignore: true, // Respect .gitignore file (usually excludes node_modules, data, test etc.)
-		})),
+		...[
+			// Slurp all project level .vue files
+			glob.sync([
+				`${app.config.paths.root}/app/app.frontend.vue`, // Main app frontend loader (must be first)
+				`${app.config.paths.root}/**/*.vue`, // All application .vue files
+			], {
+				gitignore: true, // Respect .gitignore file (usually excludes node_modules, data, test etc.)
+			}),
+
+			// Slurp @doop/**/*.vue files (seperate so gitignore doesn't trigger)
+			glob.sync([
+				`${app.config.paths.root}/**/node_modules/@doop/**/*.vue`, // All application .vue files
+			]),
+		].flat(),
 
 		// Include Webpack middlewhere when not in production to hot reload components
 		...(!app.config.isProduction && app.config?.hmr?.enabled && app.config?.hmr?.frontend ? ['webpack-hot-middleware/client?path=/dist/hmr'] : []),
