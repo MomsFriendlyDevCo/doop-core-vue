@@ -161,6 +161,6 @@ module.exports = {
 		}),
 	],
 	resolve: {
-		extensions: ['.js', '.vue'],
+		extensions: ['.js', '.mjs', '.vue'],
 	},
 };
