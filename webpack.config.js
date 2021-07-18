@@ -40,6 +40,9 @@ module.exports = {
 		path: `${app.config.paths.root}/dist`,
 		filename: 'app.[name].js',
 	},
+	optimization: {
+		minimize: app.config.build.minimize ?? app.config.isProduction,
+	},
 	cache: {
 		type: 'filesystem',
 		cacheDirectory: `${app.config.paths.root}/.cache`,
