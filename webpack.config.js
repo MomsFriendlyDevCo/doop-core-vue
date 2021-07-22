@@ -49,6 +49,11 @@ module.exports = {
 	},
 	module: {
 		rules: [
+			...(!app.config.isProduction ? [{
+				test: /\.js$/,
+				enforce: 'pre',
+				loader: require.resolve('source-map-loader'),
+			}] : []),
 			{
 				test: /\.js$/,
 				exclude: /node_modules/,
@@ -166,4 +171,11 @@ module.exports = {
 	resolve: {
 		extensions: ['.js', '.mjs', '.vue'],
 	},
+
+	// Source-map inclusion error surpression (non production only)
+	...(!app.config.isProduction ? {
+		ignoreWarnings: [/Failed to parse source map/],
+	} : {
+		devtool: false, // Disable in production
+	}),
 };
