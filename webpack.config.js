@@ -27,7 +27,7 @@ module.exports = {
 
 			// Slurp @doop/**/*.vue files (seperate so gitignore doesn't trigger)
 			glob.sync([
-				`${app.config.paths.root}/**/node_modules/@doop/**/*.vue`, // All application .vue files
+				`${app.config.paths.root}/node_modules/@doop/**/*.vue`, // All application .vue files
 			]),
 		].flat(),
 
