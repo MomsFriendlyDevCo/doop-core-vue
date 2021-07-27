@@ -14,7 +14,6 @@ let {compiler} = require('@doop/core-vue');
 
 gulp.task('build.vue', ['load:app', 'load:app.git'], ()=>
 	compiler({
-		cacheCompiler: app.config.isProduction, // Reuse cached compiler in dev mode
 		log: gulp.log, // Fancy logging output
 	})
 );
@@ -36,11 +35,11 @@ Options:
 
 | Name            | Type       | Default          | Description                                                                      |
 |-----------------|------------|------------------|----------------------------------------------------------------------------------|
+| `once`          | `boolean`  | `false`          | Run the compiler loop once, if falsy a watcher is setup and the process never terminates |
 | `config`        | `Object`   | Internal config* | The Webpack config to use, see notes                                             |
 | `configMerge`   | `Object`   | `{}`             | Additional config to merge into base using `_.merge()`                           |
 | `log`           | `function` | `console.log`    | Logging function for any output                                                  |
 | `colors`        | `boolean`  | `true`           | Whether to display coloring in output                                            |
-| `cacheCompiler` | `boolean`  | `false`          | Cache and reuse a webpack compiler if its available, memory expensive but faster |
 
 
 **NOTES:**
