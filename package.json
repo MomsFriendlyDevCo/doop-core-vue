@@ -1,6 +1,6 @@
 {
   "name": "@doop/core-vue",
-  "version": "0.0.14",
+  "version": "0.0.15",
   "description": "Doop core module for frontend Vue projects",
   "main": "./lib/index.js",
   "repository": {
@@ -17,6 +17,10 @@
     "url": "https://github.com/MomsFriendlyDevCo/doop-core-vue/issues"
   },
   "homepage": "https://github.com/MomsFriendlyDevCo/doop-core-vue#readme",
+  "engineStrict": true,
+  "engines": {
+    "node": ">=14.8.0"
+  },
   "dependencies": {
     "babel-loader": "^8.2.2",
     "clean-webpack-plugin": "^4.0.0-alpha.0",

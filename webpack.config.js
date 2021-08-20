@@ -17,23 +17,24 @@ module.exports = {
 	entry: ()=> {
 		// Find all project level .vue files
 		var vueLocal = glob.sync([
-			`${app.config.paths.root}/app/app.frontend.vue`, // Main app frontend loader (must be first)
-			`${app.config.paths.root}/**/*.vue`, // All application .vue files
+			// NOTE: Globby flakes out on Windows if we prefix with app.config.paths.root - https://github.com/sindresorhus/globby/issues/155
+			'./app/app.frontend.vue', // Main app frontend loader (must be first)
+			'./**/*.vue', // All application .vue files
 		], {
 			gitignore: true, // Respect .gitignore file (usually excludes node_modules, data, test etc.)
 		});
 
 		// Find @doop/**/*.vue files (seperate so gitignore doesn't trigger)
 		var vueImport = glob.sync([
-			`${app.config.paths.root}/node_modules/@doop/**/*.vue`, // All 3rd party .vue files
+			'./node_modules/@doop/**/*.vue', // All 3rd party .vue files
 		]);
 
 		console.log('Imported', vueLocal.length, 'local .vue files')
 		console.log('Imported', vueImport.length, '3rd party .vue files');
 
 		return [
-			...vueLocal,
-			...vueImport,
+			...vueLocal.map(path => `./${path}`), // Webpack is really fussy about relative paths
+			...vueImport.map(path => `./${path}`),
 
 			// Include Webpack middlewhere when not in production to hot reload components
 			...(!app.config.isProduction && app.config?.hmr?.enabled && app.config?.hmr?.frontend ? ['webpack-hot-middleware/client?path=/dist/hmr'] : []),
