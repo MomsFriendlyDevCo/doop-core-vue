@@ -177,6 +177,12 @@ module.exports = {
 	resolve: {
 		extensions: ['.js', '.mjs', '.vue'],
 	},
+	snapshot: {
+		...((app.config.build?.watchNodeModules ?? false)
+			? {managedPaths: []}
+			: {}
+		),
+	},
 
 	// Source-map inclusion error surpression (non production only)
 	...(!app.config.isProduction ? {
