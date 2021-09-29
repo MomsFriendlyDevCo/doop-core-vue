@@ -1,5 +1,18 @@
 /**
 * Generic webpack payload used by the frontend compiler
+*
+* @param {string} app.config.paths.root Root path when generating or reading files
+*
+* @param {boolean} [app.config.isProduction=false] Tweaks various performance related options to optimal if true
+*
+* @param {object} app.config.hmr Various Hot-Module-Reload related options
+* @param {boolean} [app.config.hmr.enabled=false] Whether to enable all features of HMR
+* @param {boolean} [app.config.hmr.frontend=false] Whether to enable front-end hot reloading
+* @param {boolean} [app.config.hmr.backend=false] Whether to enable back-end hot reloading
+*
+* @param {object} app.config.build Various build related options
+* @param {boolean} [app.config.build.minimize] Whether to attempt to minify the build, defaults to the value of `app.config.isProduction` if omitted
+* @param {boolean} [app.config.build.watchNodeModules=false] Whether to include `node_modules` contents as build targets, if disabled files here are consided immutable and are cached onwards after the first read
 */
 
 var { VueLoaderPlugin } = require('vue-loader');
@@ -10,7 +23,8 @@ var fspath = require('path');
 var webpack = require('webpack');
 
 if (!global.app) throw new Error('Cant find `app` global - run this compiler within a Doop project only');
-if (!Object.prototype.hasOwnProperty.call(global.app.config, 'hmr')) console.warn('[WARN] Missing HMR configuration');
+if (!Object.prototype.hasOwnProperty.call(global.app.config, 'hmr')) console.warn('[WARN] Missing app.config.hmr configuration');
+if (!Object.prototype.hasOwnProperty.call(global.app.config, 'build')) console.warn('[WARN] Missing app.config.build configuration');
 
 module.exports = {
 	mode: app.config.isProduction ? 'production' : 'development',
