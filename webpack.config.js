@@ -82,9 +82,14 @@ module.exports = {
 			{
 				test: /\.vue$/,
 				use: [
-					require.resolve('vue-loader'),
+					{
+						loader: require.resolve('vue-loader'),
+						options: {
+							compiler: require('vue-template-babel-compiler'),
+						},
+					},
 					require.resolve('./fixes/doop-loader'),
-				]
+				],
 			},
 			{
 				test: /\.(sa|sc|c)ss$/,
