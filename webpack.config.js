@@ -156,6 +156,8 @@ module.exports = {
 		new LodashPlugin(),
 		...(!app.config.isProduction && app.config?.hmr?.enabled && app.config?.hmr?.frontend ? [new webpack.HotModuleReplacementPlugin()] : []),
 		new webpack.AutomaticPrefetchPlugin(),
+		/*
+		// FIXME: Causes "1% setup initialize" to be "error" logged even when compiler goes unused
 		new webpack.ProgressPlugin({
 			activeModules: false,
 			entries: true,
@@ -163,6 +165,7 @@ module.exports = {
 			profile: false,
 			dependencies: false,
 		}),
+		*/
 	],
 	resolve: {
 		extensions: ['.js', '.mjs', '.vue'],
