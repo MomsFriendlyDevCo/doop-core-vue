@@ -134,41 +134,11 @@ module.exports = {
 					}
 				]
 			},
-			/*
-			// As per https://www.npmjs.com/package/font-awesome-sass-loader
-			// FIXME: Uncaught Error: Cannot find module '../node_modules/@fortawesome/fontawesome-free/webfonts/fa-solid-900.woff2'
-			// the url-loader uses DataUrls.
-			{
-				test: /\.woff(2)?(\?v=\d+\.\d+\.\d+)?$/,
-				use: [
-					{
-						loader: 'url-loader',
-						options: {
-							limit: 10000,
-							mimetype: 'application/font-woff'
-						}
-					}
-				]
-			},
-			// the file-loader emits files.
-			{
-				test: /\.(ttf|eot|svg)(\?v=\d+\.\d+\.\d+)?$/,
-				use: [
-					{
-						loader: 'file-loader',
-						options: {
-							name: '[name].[ext]',
-							outputPath: 'fonts/'
-						}
-					}
-				]
-			},
-			*/
 		],
 	},
 	plugins: [
 		new webpack.DefinePlugin({
-			CONFIG: JSON.stringify(app.config),
+			CONFIG: JSON.stringify(app.config.layout.$config),
 		}),
 		new webpack.ProvidePlugin({
 			$: 'jquery',
