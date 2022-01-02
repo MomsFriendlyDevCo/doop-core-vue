@@ -25,6 +25,7 @@ var webpack = require('webpack');
 if (!global.app) throw new Error('Cant find `app` global - run this compiler within a Doop project only');
 if (!Object.prototype.hasOwnProperty.call(global.app.config, 'hmr')) console.warn('[WARN] Missing app.config.hmr configuration');
 if (!Object.prototype.hasOwnProperty.call(global.app.config, 'build')) console.warn('[WARN] Missing app.config.build configuration');
+if (!Object.prototype.hasOwnProperty.call(global.app.config, 'layout') || typeof global.app.config.layout?.$config != 'function') console.warn('[WARN] Missing app.config.layout.$config function exporter');
 
 module.exports = {
 	mode: app.config.isProduction ? 'production' : 'development',
@@ -138,7 +139,7 @@ module.exports = {
 	},
 	plugins: [
 		new webpack.DefinePlugin({
-			CONFIG: JSON.stringify(app.config.layout.$config),
+			CONFIG: JSON.stringify(app.config.layout.$config(app)), // Ask app.config.layout.$config(app) to expose config object + JSON it
 		}),
 		new webpack.ProvidePlugin({
 			$: 'jquery',
