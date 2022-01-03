@@ -176,6 +176,35 @@ module.exports = {
 			: {}
 		),
 	},
+	stats: {
+		env: false,
+		outputPath: false,
+		publicPath: false,
+		assets: false,
+		entrypoints: false,
+		chunkGroups: false,
+		chunks: false,
+		modules: false,
+		children: false,
+
+		builtAt: false,
+		timings: false,
+		version: false,
+		hash: false,
+
+		//logging: true,
+		//loggingDebug: /webpack/,
+		//loggingTrace: true,
+
+		colors: false,
+		errors: true,
+		errorDetails: true,
+		errorStack: true,
+		errorsCount: true,
+		warnings: true,
+		warningsCount: true,
+		moduleTrace: true,
+	},
 
 	// Source-map inclusion error surpression (non production only)
 	...(!app.config.isProduction ? {
