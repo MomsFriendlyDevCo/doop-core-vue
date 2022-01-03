@@ -137,6 +137,11 @@ module.exports = {
 			},
 		],
 	},
+	performance: {
+		//hints: 'warning',
+		maxAssetSize: 1024 * 1024 * 2,
+		maxEntrypointSize: 1024 * 1024 * 8,
+	},
 	plugins: [
 		new webpack.DefinePlugin({
 			CONFIG: JSON.stringify(app.config.layout.$config(app)), // Ask app.config.layout.$config(app) to expose config object + JSON it
@@ -188,7 +193,6 @@ module.exports = {
 		children: false,
 
 		builtAt: false,
-		timings: false,
 		version: false,
 		hash: false,
 
@@ -204,6 +208,9 @@ module.exports = {
 		warnings: true,
 		warningsCount: true,
 		moduleTrace: true,
+
+		timings: true,
+		performance: true,
 	},
 
 	// Source-map inclusion error surpression (non production only)
