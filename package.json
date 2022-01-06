@@ -1,6 +1,6 @@
 {
   "name": "@doop/core-vue",
-  "version": "0.0.22",
+  "version": "0.0.23",
   "description": "Doop core module for frontend Vue projects",
   "main": "./lib/index.js",
   "repository": {
