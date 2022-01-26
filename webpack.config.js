@@ -47,6 +47,9 @@ module.exports = {
 		app.log.as('@doop/core-vue', 'Imported', vueLocal.length, 'local .vue files')
 		app.log.as('@doop/core-vue', 'Imported', vueImport.length, '3rd party .vue files');
 
+		//app.log.as('@doop/core-vue', 'Imported', vueLocal);
+		//app.log.as('@doop/core-vue', 'Imported', vueImport);
+
 		return [
 			...vueLocal.map(path => `./${path}`), // Webpack is really fussy about relative paths
 			...vueImport.map(path => `./${path}`),
