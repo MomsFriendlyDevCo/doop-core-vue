@@ -41,5 +41,8 @@
     "webpack": "^5.65.0",
     "webpack-dev-middleware": "^5.0.0",
     "webpack-hot-middleware": "^2.25.0"
-  }
+  },
+  "workspaces": [
+    "../*"
+  ]
 }
