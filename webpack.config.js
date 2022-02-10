@@ -183,6 +183,10 @@ module.exports = {
 	],
 	resolve: {
 		extensions: ['.js', '.mjs', '.vue'],
+		fallback: {
+			// NOTE: Required for minimatch which doesn't depend on path correctly
+			path: require.resolve('path-browserify'),
+		},
 	},
 	snapshot: {
 		...((app.config.build?.watchNodeModules ?? false)
