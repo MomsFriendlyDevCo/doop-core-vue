@@ -31,7 +31,7 @@ if (!Object.prototype.hasOwnProperty.call(global.app.config, 'layout') || typeof
 module.exports = {
 	mode: app.config.isProduction ? 'production' : 'development',
 	entry: ()=> {
-		// Find all project level .vue files
+		// Find all project level .vue files {{{
 		var vueLocal = glob.sync([
 			// NOTE: Globby flakes out on Windows if we prefix with app.config.paths.root - https://github.com/sindresorhus/globby/issues/155
 			'./app/app.frontend.vue', // Main app frontend loader (must be first)
@@ -40,8 +40,11 @@ module.exports = {
 		], {
 			gitignore: true, // Respect .gitignore file (usually excludes node_modules, data, test etc.)
 		});
+		debug(vueLocal);
+		app.log.as('@doop/core-vue', 'Imported', vueLocal.length, 'local .vue files');
+		// }}}
 
-		// Find @doop/**/*.vue files (seperate so gitignore doesn't trigger)
+		// Find @doop/**/*.vue files (seperate so gitignore doesn't trigger) {{{
 		var vueImport = glob.sync([
 			'./node_modules/@doop/**/*.vue', // All 3rd party .vue files
 		],
@@ -50,15 +53,27 @@ module.exports = {
 				'./node_modules/@doop/**/node_modules',
 			],
 		});
-
-		debug(vueLocal);
-		app.log.as('@doop/core-vue', 'Imported', vueLocal.length, 'local .vue files')
 		debug(vueImport);
 		app.log.as('@doop/core-vue', 'Imported', vueImport.length, '3rd party .vue files');
+		// }}}
+
+		// Find all project level .css/.scss files {{{
+		var cssLocal = glob.sync([
+			'./theme/**/*.css',
+			'./theme/**/*.scss',
+		], {
+			gitignore: true, // Respect .gitignore file (usually excludes node_modules, data, test etc.)
+		});
+		debug(cssLocal);
+		app.log.as('@doop/core-vue', 'Imported', cssLocal.length, 'local theme .css/.scss files');
+		// }}}
+
+		// TODO: Include image files?
 
 		return [
 			...vueLocal.map(path => `./${path}`), // Webpack is really fussy about relative paths
 			...vueImport.map(path => `./${path}`),
+			...cssLocal.map(path => `./${path}`),
 
 			// Include Webpack middlewhere when not in production to hot reload components
 			...(!app.config.isProduction && app.config?.hmr?.enabled && app.config?.hmr?.frontend ? ['webpack-hot-middleware/client?path=/dist/hmr'] : []),
