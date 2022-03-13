@@ -60,7 +60,7 @@ module.exports = {
 		// Find all project level .css/.scss files {{{
 		var cssLocal = glob.sync([
 			'./theme/**/*.css',
-			'./theme/**/*.scss',
+			'./theme/**/[!exclude_]*.scss',
 		], {
 			gitignore: true, // Respect .gitignore file (usually excludes node_modules, data, test etc.)
 		});
