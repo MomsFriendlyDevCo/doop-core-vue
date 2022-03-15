@@ -11,6 +11,7 @@
 * @param {boolean} [app.config.hmr.backend=false] Whether to enable back-end hot reloading
 *
 * @param {object} app.config.build Various build related options
+* @param {object} [app.config.build.importGlob] Glob specify extra files to be imported such as theme CSS/SCSS
 * @param {boolean} [app.config.build.minimize] Whether to attempt to minify the build, defaults to the value of `app.config.isProduction` if omitted
 * @param {boolean} [app.config.build.watchNodeModules=false] Whether to include `node_modules` contents as build targets, if disabled files here are consided immutable and are cached onwards after the first read
 */
