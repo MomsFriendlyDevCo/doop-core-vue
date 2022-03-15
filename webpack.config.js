@@ -75,7 +75,7 @@ module.exports = {
 		return [
 			...importLocal.map(path => `./${path}`), // Webpack is really fussy about relative paths
 			...importDoop.map(path => `./${path}`),
-			...importCustom.map(path => `./${path}`),
+			...(importCustom) ? importCustom.map(path => `./${path}`) : [],
 
 			// Include Webpack middlewhere when not in production to hot reload components
 			...(!app.config.isProduction && app.config?.hmr?.enabled && app.config?.hmr?.frontend ? ['webpack-hot-middleware/client?path=/dist/hmr'] : []),
