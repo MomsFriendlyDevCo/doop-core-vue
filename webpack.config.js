@@ -32,7 +32,7 @@ module.exports = {
 	mode: app.config.isProduction ? 'production' : 'development',
 	entry: ()=> {
 		// Find all project level .vue files {{{
-		var vueLocal = glob.sync([
+		var importLocal = glob.sync([
 			// NOTE: Globby flakes out on Windows if we prefix with app.config.paths.root - https://github.com/sindresorhus/globby/issues/155
 			'./app/app.frontend.vue', // Main app frontend loader (must be first)
 			'./**/*.vue', // All application .vue files
@@ -40,12 +40,12 @@ module.exports = {
 		], {
 			gitignore: true, // Respect .gitignore file (usually excludes node_modules, data, test etc.)
 		});
-		debug(vueLocal);
-		app.log.as('@doop/core-vue', 'Imported', vueLocal.length, 'local .vue files');
+		debug(importLocal);
+		app.log.as('@doop/core-vue', 'Imported', importLocal.length, 'local .vue files');
 		// }}}
 
 		// Find @doop/**/*.vue files (seperate so gitignore doesn't trigger) {{{
-		var vueImport = glob.sync([
+		var importDoop = glob.sync([
 			'./node_modules/@doop/**/*.vue', // All 3rd party .vue files
 		],
 		{
@@ -53,28 +53,28 @@ module.exports = {
 				'./node_modules/@doop/**/node_modules',
 			],
 		});
-		debug(vueImport);
-		app.log.as('@doop/core-vue', 'Imported', vueImport.length, '3rd party .vue files');
+		debug(importDoop);
+		app.log.as('@doop/core-vue', 'Imported', importDoop.length, '3rd party .vue files');
 		// }}}
 
-		// Find all project level .css/.scss files {{{
-		// TODO: Make CSS glob configurable at the project level, default to none.
-		var cssLocal = glob.sync([
-			'./theme/**/*.css',
-			'./theme/**/[!exclude_]*.scss',
-		], {
-			gitignore: true, // Respect .gitignore file (usually excludes node_modules, data, test etc.)
-		});
-		debug(cssLocal);
-		app.log.as('@doop/core-vue', 'Imported', cssLocal.length, 'local theme .css/.scss files');
+		// Find all files within custom glob {{{
+		if (app.config.build.importGlob) {
+			var importCustom = glob.sync(app.config.build.importGlob, {
+				gitignore: true, // Respect .gitignore file (usually excludes node_modules, data, test etc.)
+			});
+			debug(importCustom);
+			app.log.as('@doop/core-vue', 'Imported', importCustom.length, ' from configurable "importGlob"');
+		} else {
+			app.log.as('@doop/core-vue', 'Skipped-Importing from configurable "importGlob"');
+		}
 		// }}}
 
 		// TODO: Include image files?
 
 		return [
-			...vueLocal.map(path => `./${path}`), // Webpack is really fussy about relative paths
-			...vueImport.map(path => `./${path}`),
-			...cssLocal.map(path => `./${path}`),
+			...importLocal.map(path => `./${path}`), // Webpack is really fussy about relative paths
+			...importDoop.map(path => `./${path}`),
+			...importCustom.map(path => `./${path}`),
 
 			// Include Webpack middlewhere when not in production to hot reload components
 			...(!app.config.isProduction && app.config?.hmr?.enabled && app.config?.hmr?.frontend ? ['webpack-hot-middleware/client?path=/dist/hmr'] : []),
