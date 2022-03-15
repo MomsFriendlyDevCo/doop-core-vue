@@ -58,6 +58,7 @@ module.exports = {
 		// }}}
 
 		// Find all project level .css/.scss files {{{
+		// TODO: Make CSS glob configurable at the project level, default to none.
 		var cssLocal = glob.sync([
 			'./theme/**/*.css',
 			'./theme/**/[!exclude_]*.scss',
