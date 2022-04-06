@@ -33,7 +33,7 @@ module.exports = {
 	mode: app.config.isProduction ? 'production' : 'development',
 	entry: ()=> {
 		// Find all project level .vue files {{{
-		var importLocal = glob.sync([
+		const importLocal = glob.sync([
 			// NOTE: Globby flakes out on Windows if we prefix with app.config.paths.root - https://github.com/sindresorhus/globby/issues/155
 			'./app/app.frontend.vue', // Main app frontend loader (must be first)
 			'./**/*.vue', // All application .vue files
@@ -46,7 +46,7 @@ module.exports = {
 		// }}}
 
 		// Find @doop/**/*.vue files (seperate so gitignore doesn't trigger) {{{
-		var importDoop = glob.sync([
+		const importDoop = glob.sync([
 			'./node_modules/@doop/**/*.vue', // All 3rd party .vue files
 		],
 		{
@@ -60,7 +60,7 @@ module.exports = {
 
 		// Find all files within custom glob {{{
 		if (app.config.build.importGlob) {
-			var importCustom = glob.sync(app.config.build.importGlob, {
+			const importCustom = glob.sync(app.config.build.importGlob, {
 				gitignore: true, // Respect .gitignore file (usually excludes node_modules, data, test etc.)
 			});
 			debug(importCustom);
@@ -71,6 +71,9 @@ module.exports = {
 		// }}}
 
 		// TODO: Include image files?
+
+		if (!app.config.isProduction && app.config?.hmr?.enabled && app.config?.hmr?.frontend)
+			debug('Including HMR client');
 
 		return [
 			...importLocal.map(path => `./${path}`), // Webpack is really fussy about relative paths
@@ -187,6 +190,7 @@ module.exports = {
 		new LodashPlugin(),
 		...(!app.config.isProduction && app.config?.hmr?.enabled && app.config?.hmr?.frontend ? [new webpack.HotModuleReplacementPlugin()] : []),
 		new webpack.AutomaticPrefetchPlugin(),
+		new webpack.HotModuleReplacementPlugin(),
 		/*
 		// FIXME: Causes "1% setup initialize" to be "error" logged even when compiler goes unused
 		new webpack.ProgressPlugin({
@@ -202,6 +206,7 @@ module.exports = {
 		extensions: ['.js', '.mjs', '.vue'],
 		fallback: {
 			// NOTE: Required for minimatch which doesn't depend on path correctly
+			// FIXME: Requirement for this should have been patched by minimatch
 			path: require.resolve('path-browserify'),
 		},
 	},
