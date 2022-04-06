@@ -190,7 +190,6 @@ module.exports = {
 		new LodashPlugin(),
 		...(!app.config.isProduction && app.config?.hmr?.enabled && app.config?.hmr?.frontend ? [new webpack.HotModuleReplacementPlugin()] : []),
 		new webpack.AutomaticPrefetchPlugin(),
-		new webpack.HotModuleReplacementPlugin(),
 		/*
 		// FIXME: Causes "1% setup initialize" to be "error" logged even when compiler goes unused
 		new webpack.ProgressPlugin({
