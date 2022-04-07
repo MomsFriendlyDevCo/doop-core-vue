@@ -59,8 +59,9 @@ module.exports = {
 		// }}}
 
 		// Find all files within custom glob {{{
+		const importCustom = [];
 		if (app.config.build.importGlob) {
-			const importCustom = glob.sync(app.config.build.importGlob, {
+			importCustom = glob.sync(app.config.build.importGlob, {
 				gitignore: true, // Respect .gitignore file (usually excludes node_modules, data, test etc.)
 			});
 			debug(importCustom);
