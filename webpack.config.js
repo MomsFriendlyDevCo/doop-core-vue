@@ -204,6 +204,7 @@ module.exports = {
 	],
 	resolve: {
 		extensions: ['.js', '.mjs', '.vue'],
+		symlinks: false,
 		fallback: {
 			// NOTE: Required for minimatch which doesn't depend on path correctly
 			// FIXME: Requirement for this should have been patched by minimatch
