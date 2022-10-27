@@ -128,13 +128,13 @@ module.exports = {
 					{
 						loader: require.resolve('sass-loader'),
 						options: {
-						  sassOptions: {
-							indentWidth: 4,
-							includePaths: [
-								fspath.resolve(__dirname, './node_modules'),
-								fspath.resolve('./node_modules'),
-							],
-						  },
+							sassOptions: {
+								indentWidth: 4,
+								includePaths: [
+									fspath.resolve(__dirname, './node_modules'),
+									fspath.resolve('./node_modules'),
+								],
+							},
 						},
 					},
 				]
