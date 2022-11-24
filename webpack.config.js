@@ -84,7 +84,7 @@ module.exports = {
 		];
 	},
 	output: {
-		globalObject: 'this',
+		globalObject: 'this', // TODO: Move to "globalThis"?
 		libraryTarget: 'umd',
 		path: `${app.config.paths.root}/dist`,
 		filename: 'app.[name].js',
