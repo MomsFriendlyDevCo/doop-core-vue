@@ -59,7 +59,7 @@ module.exports = {
 		// }}}
 
 		// Find all files within custom glob {{{
-		const importCustom = [];
+		let importCustom = [];
 		if (app.config.build.importGlob) {
 			importCustom = glob.sync(app.config.build.importGlob, {
 				gitignore: true, // Respect .gitignore file (usually excludes node_modules, data, test etc.)
@@ -77,7 +77,7 @@ module.exports = {
 		return [
 			...importLocal.map(path => `./${path}`), // Webpack is really fussy about relative paths
 			...importDoop.map(path => `./${path}`),
-			...(importCustom) ? importCustom.map(path => `./${path}`) : [],
+			...(importCustom ? importCustom.map(path => `./${path}`) : []),
 
 			// Include Webpack middlewhere when not in production to hot reload components
 			...(!app.config.isProduction && app.config?.hmr?.enabled && app.config?.hmr?.frontend ? ['webpack-hot-middleware/client?path=/dist/hmr'] : []),
@@ -128,13 +128,13 @@ module.exports = {
 					{
 						loader: require.resolve('sass-loader'),
 						options: {
-						  sassOptions: {
-							indentWidth: 4,
-							includePaths: [
-								fspath.resolve(__dirname, './node_modules'),
-								fspath.resolve('./node_modules'),
-							],
-						  },
+							sassOptions: {
+								indentWidth: 4,
+								includePaths: [
+									fspath.resolve(__dirname, './node_modules'),
+									fspath.resolve('./node_modules'),
+								],
+							},
 						},
 					},
 				]
