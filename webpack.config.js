@@ -65,7 +65,7 @@ module.exports = {
 				gitignore: true, // Respect .gitignore file (usually excludes node_modules, data, test etc.)
 			});
 			debug(importCustom);
-			app.log.as('@doop/core-vue', 'Imported', importCustom.length, 'from configurable "importGlob"');
+			app.log.as('@doop/core-vue', 'Imported', importCustom.length, 'files from configurable "importGlob"');
 		}
 		// }}}
 
