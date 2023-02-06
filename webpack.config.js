@@ -37,7 +37,7 @@ module.exports = {
 			// NOTE: Globby flakes out on Windows if we prefix with app.config.paths.root - https://github.com/sindresorhus/globby/issues/155
 			'./app/app.frontend.vue', // Main app frontend loader (must be first)
 			'./**/*.vue', // All application .vue files
-			// TODO: Utilise app.config.paths.ignore?
+			...(app.config.build?.ignoreGlob || []),
 		], {
 			gitignore: true, // Respect .gitignore file (usually excludes node_modules, data, test etc.)
 		});
