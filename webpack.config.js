@@ -48,6 +48,7 @@ module.exports = {
 		// Find @doop/**/*.vue files (seperate so gitignore doesn't trigger) {{{
 		const importDoop = glob.sync([
 			'./node_modules/@doop/**/*.vue', // All 3rd party .vue files
+			...app.config.build.vueGlob,
 		],
 		{
 			ignore: [
