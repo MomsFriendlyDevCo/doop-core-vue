@@ -17,8 +17,9 @@
 */
 
 const debug = require('debug')('doop:core-vue');
-const { VueLoaderPlugin } = require('vue-loader');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+const { VueLoaderPlugin } = require('vue-loader');
+const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 const LodashPlugin = require('lodash-webpack-plugin');
 const glob = require('globby');
 const fspath = require('path');
@@ -200,6 +201,9 @@ module.exports = {
 			dependencies: false,
 		}),
 		*/
+		...(!app.config.isProduction && [new BundleAnalyzerPlugin({
+			analyzerMode: 'disabled', // Generate dist/stats.json and nothing else
+		})]),
 	],
 	resolve: {
 		extensions: ['.js', '.mjs', '.vue'],
