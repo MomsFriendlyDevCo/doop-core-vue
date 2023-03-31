@@ -17,8 +17,9 @@
 */
 
 const debug = require('debug')('doop:core-vue');
-const { VueLoaderPlugin } = require('vue-loader');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+const { VueLoaderPlugin } = require('vue-loader');
+const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 const LodashPlugin = require('lodash-webpack-plugin');
 const glob = require('globby');
 const fspath = require('path');
@@ -37,7 +38,7 @@ module.exports = {
 			// NOTE: Globby flakes out on Windows if we prefix with app.config.paths.root - https://github.com/sindresorhus/globby/issues/155
 			'./app/app.frontend.vue', // Main app frontend loader (must be first)
 			'./**/*.vue', // All application .vue files
-			// TODO: Utilise app.config.paths.ignore?
+			...(app.config.build?.ignoreGlob || []),
 		], {
 			gitignore: true, // Respect .gitignore file (usually excludes node_modules, data, test etc.)
 		});
@@ -48,6 +49,7 @@ module.exports = {
 		// Find @doop/**/*.vue files (seperate so gitignore doesn't trigger) {{{
 		const importDoop = glob.sync([
 			'./node_modules/@doop/**/*.vue', // All 3rd party .vue files
+			...app.config.build.vueGlob,
 		],
 		{
 			ignore: [
@@ -77,7 +79,7 @@ module.exports = {
 		return [
 			...importLocal.map(path => `./${path}`), // Webpack is really fussy about relative paths
 			...importDoop.map(path => `./${path}`),
-			...(importCustom) ? importCustom.map(path => `./${path}`) : [],
+			...(importCustom ? importCustom.map(path => `./${path}`) : []),
 
 			// Include Webpack middlewhere when not in production to hot reload components
 			...(!app.config.isProduction && app.config?.hmr?.enabled && app.config?.hmr?.frontend ? ['webpack-hot-middleware/client?path=/dist/hmr'] : []),
@@ -199,6 +201,9 @@ module.exports = {
 			dependencies: false,
 		}),
 		*/
+		...(!app.config.isProduction && [new BundleAnalyzerPlugin({
+			analyzerMode: 'disabled', // Generate dist/stats.json and nothing else
+		})]),
 	],
 	resolve: {
 		extensions: ['.js', '.mjs', '.vue'],
