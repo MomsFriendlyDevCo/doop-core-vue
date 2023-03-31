@@ -82,7 +82,7 @@ module.exports = {
 			...(importCustom ? importCustom.map(path => `./${path}`) : []),
 
 			// Include Webpack middlewhere when not in production to hot reload components
-			...(!app.config.isProduction && app.config?.hmr?.enabled && app.config?.hmr?.frontend ? ['webpack-hot-middleware/client?path=/dist/hmr'] : []),
+			...((!app.config.isProduction && app.config?.hmr?.enabled && app.config?.hmr?.frontend) ? ['webpack-hot-middleware/client?path=/dist/hmr'] : []),
 		];
 	},
 	output: {
@@ -189,7 +189,7 @@ module.exports = {
 			],
 		}),
 		new LodashPlugin(),
-		...(!app.config.isProduction && app.config?.hmr?.enabled && app.config?.hmr?.frontend ? [new webpack.HotModuleReplacementPlugin()] : []),
+		...((!app.config.isProduction && app.config?.hmr?.enabled && app.config?.hmr?.frontend) ? [new webpack.HotModuleReplacementPlugin()] : []),
 		new webpack.AutomaticPrefetchPlugin(),
 		/*
 		// FIXME: Causes "1% setup initialize" to be "error" logged even when compiler goes unused
@@ -201,9 +201,9 @@ module.exports = {
 			dependencies: false,
 		}),
 		*/
-		...(!app.config.isProduction && [new BundleAnalyzerPlugin({
+		...((!app.config.isProduction) ? [new BundleAnalyzerPlugin({
 			analyzerMode: 'disabled', // Generate dist/stats.json and nothing else
-		})]),
+		})] : []),
 	],
 	resolve: {
 		extensions: ['.js', '.mjs', '.vue'],
